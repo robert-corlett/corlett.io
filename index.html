@@ -5,13 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle</title>
+    
     <script>
     </script>
     <style>
+        @font-face {
+              font-family: 'NYTFranklin';
+              src: url('https://github.com/FrancesCoronel/nyt-comm/raw/refs/heads/master/fonts/franklin/franklin-normal-700.ttf') format('truetype') font-weight(700);
+              font-style: normal;
+              font-display: swap;
+        }
+        
         * {
-    color: #ffffff;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
+            color: #ffffff;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
 
 body {
     background-color: #121213;
@@ -36,10 +44,12 @@ body {
     margin-bottom: 30px;
 }
 
-.key-container{
+.key-container {
     width: 510px;
     display: flex;
     flex-wrap: wrap;
+    font-family: 'NYTFranklin', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 700; 
 }
 
 .key-container button{

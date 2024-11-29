@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isGameOver = false;
 
     const getWordle = () => {
-        wordle = (forcedWordle) ? forcedWordle : words[Math.floor(Math.random() * words.length)].toUpperCase();
+        wordle = (forcedWordle) ? forcedWordle.toUpperCase() : words[Math.floor(Math.random() * words.length)].toUpperCase();
     };
     getWordle();
 
@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const rowTiles = document.querySelector('#guessRow-' + currentRow).childNodes;
         let checkWordle = wordle.split('');
         const guess = [];
+        const usedLetters = Array(wordle.length).fill(false);  // Track used letters in the wordle
     
         // Initialize guess array with 'grey' for all letters
         rowTiles.forEach(tile => {
@@ -144,15 +145,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (guess.letter === wordle[index]) {
                 guess.color = 'green';
                 checkWordle[index] = null;  // Mark this letter as used
+                usedLetters[index] = true;  // Mark the letter as used for greens
             }
         });
     
         // Second pass: assign 'yellow' for correct letters in the wrong position
         guess.forEach((guess, index) => {
-            if (guess.color !== 'green' && checkWordle.includes(guess.letter)) {
-                guess.color = 'yellow';
-                // Find the index of the letter in checkWordle and mark it as used
-                checkWordle[checkWordle.indexOf(guess.letter)] = null;
+            if (guess.color !== 'green') {
+                const letterIndex = checkWordle.findIndex((letter, i) => letter === guess.letter && !usedLetters[i]);
+                if (letterIndex !== -1) {
+                    guess.color = 'yellow';
+                    usedLetters[letterIndex] = true;  // Mark the letter as used for yellows
+                    checkWordle[letterIndex] = null;  // Mark this letter as used
+                }
             }
         });
     
@@ -164,37 +169,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 addColorToKey(guess[index].letter, guess[index].color);
             }, 500 * index);
         });
-    };
-    
-    // const flipTile = () => {
-    //     const rowTiles = document.querySelector('#guessRow-' + currentRow).childNodes;
-    //     let checkWordle = wordle;
-    //     const guess = [];
-
-    //     rowTiles.forEach(tile => {
-    //         guess.push({ letter: tile.getAttribute('data'), color: 'grey' });
-    //     });
-
-    //     guess.forEach((guess, index) => {
-    //         if (guess.letter === wordle[index]) {
-    //             guess.color = 'green';
-    //             checkWordle = checkWordle.replace(guess.letter, '');
-    //         }
-    //     });
-
-    //     guess.forEach(guess => {
-    //         if (checkWordle.includes(guess.letter)) {
-    //             guess.color = 'yellow';
-    //             checkWordle = checkWordle.replace(guess.letter, '');
-    //         }
-    //     });
-
-    //     rowTiles.forEach((tile, index) => {
-    //         setTimeout(() => {
-    //             tile.classList.add('flip');
-    //             tile.classList.add(guess[index].color);
-    //             addColorToKey(guess[index].letter, guess[index].color);
-    //         }, 500 * index);
-    //     });
-    // };
+    }
 });

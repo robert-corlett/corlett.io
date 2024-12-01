@@ -175,15 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isGameOver) return;
 
         const key = e.key.toUpperCase();
-
-        showMessage(key);
-
-        const keyMap = {
-            'BACKSPACE': '<<',
-            'ENTER': 'ENTER'
-        };
-
-        handleClick(keyMap[key] || key);
+        const keyMap = { 'BACKSPACE': '<<', 'ENTER': 'ENTER'};
+        
+        if (keys.includes(key) || keyMap[key]) {
+            handleClick(keyMap[key] || key);
+        }
+        
     });
 
 

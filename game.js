@@ -170,4 +170,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500 * index);
         });
     }
+
+    document.addEventListener('keydown', (e) => {
+        if (isGameOver) return;
+
+        const key = e.key.toUpperCase();
+
+        showMessage(key);
+
+        const keyMap = {
+            'BACKSPACE': '<<',
+            'ENTER': 'ENTER'
+        };
+
+        handleClick(keyMap[key] || key);
+    });
+
+
 })

@@ -169,34 +169,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 addColorToKey(guess[index].letter, guess[index].color);
             }, 500 * index);
         });
-        
-        // Save game state to local storage
-        saveGameState();
-    };
-
-    const saveGameState = () => {
-        const gameHistory = JSON.parse(localStorage.getItem('wordleHistory')) || [];
-        const currentWordleData = {
-            wordle: wordle,
-            score: currentRow + 1,  // Score is the number of rows used
-            guesses: guessRows.slice(0, currentRow + 1),  // List of guesses made
-            timestamp: new Date().toISOString(),
-        };
-        gameHistory.push(currentWordleData);
-        localStorage.setItem('wordleHistory', JSON.stringify(gameHistory));
-    };
-    
-    const loadGameState = () => {
-        const gameHistory = JSON.parse(localStorage.getItem('wordleHistory')) || [];
-        console.log("Game History:", gameHistory);
-    };
-    
-    // Call loadGameState on page load to see previous game history
-    document.addEventListener('DOMContentLoaded', () => {
-        loadGameState();
-    });
-
-    
-    
-});
-
+    }
+})
